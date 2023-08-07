@@ -426,7 +426,8 @@ class PDA_GUI:
         script_path = sys.argv[0]
         script_directory = os.path.dirname(script_path)
         icon_path = os.path.join(script_directory, 'icon.ico')
-        self.window.iconbitmap(icon_path)
+        if os.path.exists(icon_path):
+            self.window.iconbitmap(icon_path)
         self.window.mainloop()
 
 if __name__ == "__main__":

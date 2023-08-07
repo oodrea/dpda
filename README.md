@@ -4,10 +4,6 @@ Deterministic Pushdown Automata Implementation in Python
 STALGCM S12 | AY 22-23
 Case Study
 
-- Lapuz, Mari Salvador
-- Roco, Gwen Kathleen
-- Tabadero, Audrea Arjaemi
-
 ## Machine Definition Format for DPDA:
 
 ### 1. Number of States

@@ -2,7 +2,6 @@
 Deterministic Pushdown Automata Implementation in Python
 
 STALGCM S12 | AY 22-23
-Case Study
 
 ## Machine Definition Format for DPDA:
 

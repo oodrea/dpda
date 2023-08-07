@@ -47,7 +47,7 @@ Case Study
     q1 q1 b a λ
     q1 q2 λ Z λ
     ```
-    - - The first transition means: From state `q0`, when the input symbol `a` is read and the symbol to be popped from the stack is `λ` (indicating it's empty), move to state `q0` and push the symbol `a` onto the stack.
+    The first transition means: From state `q0`, when the input symbol `a` is read and the symbol to be popped from the stack is `λ`, move to state `q0` and push the symbol `a` onto the stack.
 
 ### 6. Start State
 - Specifies the initial state of the DPDA.

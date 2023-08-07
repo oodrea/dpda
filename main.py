@@ -50,7 +50,7 @@ class Stack:
         return ''.join(reverse)
 
     def __str__(self):
-        return str(self.data[::-1])
+        return str(self.data)
 
 # PDAConfiguration Class used in Trace
 class PDAConfiguration:
@@ -94,6 +94,10 @@ class PDA:
     # Gets state name
     def get_state_name(self, state):
         return self.statesLst[state]
+    
+    def print_stack(self, s):
+        return "[" + ", ".join(reversed(s)) + "]"
+
 
     # Main function for DPDA
     def test(self, inputString):
@@ -117,18 +121,17 @@ class PDA:
                 if result:
                     if transition["POP"] != 'λ' and transition["POP"] == stackTop:
                         self.stack.pop()
-                        self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
                     if transition["PUSH"] != 'λ':
                         self.stack.push(transition["PUSH"])
-                        self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
-                    
+                        
                     stackTop = self.stack.peek()
                     currState = transition['TO']
-                    
+
                     if i == len(string) - 1 and currState in self.accept:
                         status = f"Input Accepted: Reached a Final State({self.get_state_name(currState)})."
                         self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, status)
                         return True
+                    self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
                 else:
                     return False
         
@@ -142,18 +145,17 @@ class PDA:
                 if result:
                     if transition["POP"] != 'λ' and transition["POP"] == stackTop:
                         self.stack.pop()
-                        self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
                         if self.stack.isEmpty(): 
                             self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, "Input Accepted: Resulting Stack is Empty.")
                             return True
                     if transition["PUSH"] != 'λ':
-                        self.stack.push(transition["PUSH"])
-                        self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
-                    
+                        self.stack.push(transition["PUSH"]) 
                     stackTop = self.stack.peek()
                     currState = transition['TO']
+                    self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
                 else:
                     return False
+                
             return False  
         
         # Acceptance mode is by Both Final State and Empty Stack
@@ -166,10 +168,8 @@ class PDA:
                 if result:
                     if transition["POP"] != 'λ' and transition["POP"] == stackTop:
                         self.stack.pop()
-                        self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
                     if transition["PUSH"] != 'λ':
                         self.stack.push(transition["PUSH"])
-                        self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
                     
                     stackTop = self.stack.peek()
                     currState = transition['TO']
@@ -179,7 +179,7 @@ class PDA:
                         return True
                 else:
                     return False
-        
+                self.add_configuration(self.get_state_name(currState), currinput, self.stack.__str__(), remainingStr, None)
         return False
 
 # Conversion to Internal Representation
@@ -233,6 +233,7 @@ class PDA_GUI:
         self.filename = filedialog.askopenfilename()
         if self.filename:  # Check if a file has been selected
             self.set_dpda()
+            self.input_entry.delete(0, tk.END)
             self.reset_button.grid_remove()
             PDA_GUI.display_info(self)
             self.generate_diag_button.grid(row=2, column=0, sticky="WE")
@@ -422,6 +423,10 @@ class PDA_GUI:
         self.reset_button.grid_remove()  # This will hide the button by default
 
     def run(self):
+        script_path = sys.argv[0]
+        script_directory = os.path.dirname(script_path)
+        icon_path = os.path.join(script_directory, 'icon.ico')
+        self.window.iconbitmap(icon_path)
         self.window.mainloop()
 
 if __name__ == "__main__":

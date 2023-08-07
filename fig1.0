@@ -1,0 +1,13 @@
+4
+start q1 q2 end
+2
+0 1
+6
+start start 0 λ X
+start q1 1 λ λ
+q1 q1 1 λ λ
+q1 q2 0 X λ
+q2 q2 0 X λ
+q2 end λ Z λ
+start
+end
